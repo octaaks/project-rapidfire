@@ -1,2 +1,3 @@
 # project-rapidfire
-Unity FPS Multiplayer "Project Rapidfire"
+<img src="https://github.com/octaaks/project-rapidfire/blob/master/title.png"><br>
+Unity FPS Multiplayer Game
