@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63fff0bda7f0d9740a2c41893293e307, type: 3}
+  m_Name: Vector
+  m_EditorClassIdentifier: 
+  name: Vector
+  prefab: {fileID: 2934486304957575732, guid: d68b56a675d88ee4f88f710114b96174, type: 3}
+  display: {fileID: 2934486304957575732, guid: 63caa1b12648f73459c5832f9bd6f2b6, type: 3}
+  damage: 9
+  pellets: 1
+  firerate: 0.07
+  aimSpeed: 25
+  ammo: 150
+  clipsize: 50
+  reloadTime: 2
+  burst: 1
+  aimable: 1
+  recovery: 0
+  isSniper: 0
+  bloom: 20
+  bloomWhenAim: 8
+  kickback: 0.03
+  recoil: 0.025
+  camRecoil: 0.45
+  spreadCooldown: 0.75
+  spreadRatePerShot: 0.13
+  fixedRecoil: 0
+  mainFOV: 0.6
+  weaponFOV: 0.2
+  gunShotSound: {fileID: 8300000, guid: 9c2752457084be541939e2abf0b62f50, type: 3}
+  recoverySound: {fileID: 0}
+  recoveryDelayTime: 0.2
+  shotVolume: 0.35
+  pitchRandomization: 0.03

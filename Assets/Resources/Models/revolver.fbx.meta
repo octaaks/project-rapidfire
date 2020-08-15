@@ -1,0 +1,167 @@
+fileFormatVersion: 2
+guid: 4870b391166798140beaa1b9a38ca714
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Camera
+    100002: Cube
+    100004: Cube.001
+    100006: Cube.002
+    100008: Cube.003
+    100010: Cylinder
+    100012: Cylinder.001
+    100014: Cylinder.002
+    100016: Cylinder.003
+    100018: Empty
+    100020: Light
+    100022: //RootNode
+    100024: Sphere
+    100026: Mag
+    100028: Revolver
+    100030: Cube.004
+    100032: Mag.002
+    400000: Camera
+    400002: Cube
+    400004: Cube.001
+    400006: Cube.002
+    400008: Cube.003
+    400010: Cylinder
+    400012: Cylinder.001
+    400014: Cylinder.002
+    400016: Cylinder.003
+    400018: Empty
+    400020: Light
+    400022: //RootNode
+    400024: Sphere
+    400026: Mag
+    400028: Revolver
+    400030: Cube.004
+    400032: Mag.002
+    2000000: Camera
+    2100000: No Name
+    2300000: Cube
+    2300002: Cube.001
+    2300004: Cube.002
+    2300006: Cube.003
+    2300008: Cylinder
+    2300010: Cylinder.001
+    2300012: Cylinder.002
+    2300014: Cylinder.003
+    2300016: Sphere
+    2300018: Mag
+    2300020: Revolver
+    2300022: Cube.004
+    2300024: Mag.002
+    3300000: Cube
+    3300002: Cube.001
+    3300004: Cube.002
+    3300006: Cube.003
+    3300008: Cylinder
+    3300010: Cylinder.001
+    3300012: Cylinder.002
+    3300014: Cylinder.003
+    3300016: Sphere
+    3300018: Mag
+    3300020: Revolver
+    3300022: Cube.004
+    3300024: Mag.002
+    4300000: Cylinder
+    4300002: Cylinder.001
+    4300004: Cylinder.002
+    4300006: Cube.001
+    4300008: Cube.002
+    4300010: Cylinder.003
+    4300012: Sphere
+    4300014: Cube
+    4300016: Cube.003
+    4300018: Revolver
+    4300020: Mag
+    4300022: Mag.002
+    4300024: Cube.004
+    10800000: Light
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

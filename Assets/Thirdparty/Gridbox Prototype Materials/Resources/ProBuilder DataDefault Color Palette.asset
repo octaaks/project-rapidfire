@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dda436a9c8bbd4d109478acf25cd48d8, type: 3}
+  m_Name: ProBuilder DataDefault Color Palette
+  m_EditorClassIdentifier: 
+  m_Colors:
+  - {r: 0.13333334, g: 0.13333334, b: 0.13333334, a: 1}
+  - {r: 0.27772337, g: 0.52766305, b: 0.745283, a: 1}
+  - {r: 0.498, g: 0.859, b: 1, a: 1}
+  - {r: 0.224, g: 0.8, b: 0.8, a: 1}
+  - {r: 0.239, g: 0.6, b: 0.439, a: 1}
+  - {r: 0.26962438, g: 0.6886792, b: 0.3173648, a: 1}
+  - {r: 0.004, g: 1, b: 0.439, a: 1}
+  - {r: 1, g: 0.863, b: 0, a: 1}
+  - {r: 0.93333334, g: 0.64134216, b: 0.011764677, a: 1}
+  - {r: 0.8113208, g: 0.2591149, b: 0.22579211, a: 1}
+  - {r: 0.522, g: 0.078, b: 0.294, a: 1}
+  - {r: 0.53333336, g: 0.53333336, b: 0.53333336, a: 1}
+  - {r: 0.4, g: 0.4, b: 0.4, a: 1}
+  - {r: 0.26666668, g: 0.26666668, b: 0.26666668, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 0.867, g: 0.867, b: 0.867, a: 1}

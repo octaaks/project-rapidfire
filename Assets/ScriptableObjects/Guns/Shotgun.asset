@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63fff0bda7f0d9740a2c41893293e307, type: 3}
+  m_Name: Shotgun
+  m_EditorClassIdentifier: 
+  name: Winchester
+  prefab: {fileID: 2934486304957575732, guid: 4e26ca1f89856a34ebbe90123c5c0127, type: 3}
+  display: {fileID: 527367860384312025, guid: 4e9c4420aed424440b5357e9c8946260, type: 3}
+  damage: 8
+  pellets: 15
+  firerate: 0.6
+  aimSpeed: 15
+  ammo: 40
+  clipsize: 10
+  reloadTime: 2
+  burst: 0
+  aimable: 0
+  recovery: 1
+  isSniper: 0
+  bloom: 25
+  bloomWhenAim: 1
+  kickback: 0.2
+  recoil: 15
+  camRecoil: 2
+  spreadCooldown: 0
+  spreadRatePerShot: 1
+  fixedRecoil: 1
+  mainFOV: 0.8
+  weaponFOV: 0.5
+  gunShotSound: {fileID: 8300000, guid: b1ceb853c855bfe4ea733082373b7d53, type: 3}
+  recoverySound: {fileID: 8300000, guid: 8eb52c13816efcc4dbfbb25a9ec6160a, type: 3}
+  recoveryDelayTime: 0.2
+  shotVolume: 0.3
+  pitchRandomization: 0.05
