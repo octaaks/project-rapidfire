@@ -48,7 +48,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 603913495712757354}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -933,7 +933,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadout:
   - {fileID: 11400000, guid: 1c45f451161f67249a13b0b48990efb2, type: 2}
-  - {fileID: 11400000, guid: b377bc362c72d5249a4454c0018ddb08, type: 2}
   currentGunData: {fileID: 0}
   weaponParent: {fileID: 6741137457949533439}
   gunPoint: {fileID: 865739879025764574}

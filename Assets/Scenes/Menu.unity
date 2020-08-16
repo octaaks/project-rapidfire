@@ -10933,7 +10933,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allGuns:
   - {fileID: 11400000, guid: 1c45f451161f67249a13b0b48990efb2, type: 2}
-  - {fileID: 11400000, guid: cdc8e8a719016204ebff9cc0c6154479, type: 2}
+  - {fileID: 11400000, guid: b377bc362c72d5249a4454c0018ddb08, type: 2}
   - {fileID: 11400000, guid: 9c87f3e8ca3b4474e997545829050c97, type: 2}
   - {fileID: 11400000, guid: 25cf8289daf342d44b842c87508eeb85, type: 2}
   - {fileID: 11400000, guid: 9ac3abd5b658b26498a11a49f840d636, type: 2}

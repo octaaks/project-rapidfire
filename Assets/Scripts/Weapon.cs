@@ -71,32 +71,35 @@ public class Weapon : MonoBehaviourPunCallbacks
     void Update()
     {
         if (Pause.paused && photonView.IsMine) return;
-        
-        //reset cam recoil
-        camHolder.transform.localRotation = Quaternion.Lerp(camHolder.transform.localRotation, camHolderOriginRotation, Time.deltaTime * 2f);
 
-        //Pickup weapon trigger
-        Transform camCenter;
-        camCenter = gunCam.transform;
-
-        RaycastHit pickuphit = new RaycastHit();
-        if (Physics.Raycast(camCenter.position, camCenter.transform.forward, out pickuphit, pickupDistance, pickupLayer))
+        if (photonView.IsMine)
         {
-            equipText.enabled = true;
-            Debug.DrawLine(camCenter.position, pickuphit.point, Color.green);
-            Debug.Log("Weapon on sight!!!");
-            if (Input.GetKeyDown(KeyCode.E))
+            //Pickup weapon trigger
+            Transform camCenter;
+            camCenter = gunCam.transform;
+
+            RaycastHit pickuphit = new RaycastHit();
+            if (Physics.Raycast(camCenter.position, camCenter.transform.forward, out pickuphit, pickupDistance, pickupLayer))
             {
-                photonView.RPC("PickupWeapon", RpcTarget.All, pickuphit.transform.GetComponent<Pickup>().weapon.name);
-                pickuphit.transform.GetComponent<Pickup>().PickedUp();
-                
+                equipText.enabled = true;
+                Debug.DrawLine(camCenter.position, pickuphit.point, Color.green);
+                Debug.Log("Weapon on sight!!!");
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    photonView.RPC("PickupWeapon", RpcTarget.All, pickuphit.transform.GetComponent<Pickup>().weapon.name);
+                    pickuphit.transform.GetComponent<Pickup>().PickedUp();
+
+                }
+            }
+            else
+            {
+                equipText.enabled = false;
             }
         }
-        else
-        {
-            equipText.enabled = false;
-        }
 
+        //reset cam recoil
+        camHolder.transform.localRotation = Quaternion.Lerp(camHolder.transform.localRotation, camHolderOriginRotation, Time.deltaTime * 2f);
+                
         if (photonView.IsMine && Input.GetKeyDown(KeyCode.Alpha1) && equippedWeapon!=1)//my fix
         {
             if(loadout[0] != null)

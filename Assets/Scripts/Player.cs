@@ -124,7 +124,7 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
         {
             ui_ammo = GameObject.Find("HUD/Ammo/Text (TMP)").GetComponent<TextMeshProUGUI>();
             ui_username = GameObject.Find("HUD/Username/Text (TMP)").GetComponent<TextMeshProUGUI>();
-            ui_fuelbar = GameObject.Find("HUD/Fuel/Bar").transform;
+            //ui_fuelbar = GameObject.Find("HUD/Fuel/Bar").transform;
             ui_healthbar = GameObject.Find("HUD/Health/HP").transform;
             ui_team = GameObject.Find("HUD/Team/Text (TMP)").GetComponent<TextMeshProUGUI>();
 
@@ -151,7 +151,6 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
             }
             else
             {
-                photonView.RPC("NoTeamIndicators", RpcTarget.All);
                 ui_team.gameObject.SetActive(false);
             }
 
@@ -161,7 +160,11 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
 
     public void ColorTeamIndicators(Color p_color)
     {
-        foreach (Renderer renderer in teamIndicators) renderer.material.color = p_color;
+        foreach (Renderer renderer in teamIndicators)
+        {
+            renderer.enabled = true;
+            renderer.material.color = p_color;
+        }
     }
 
     private void ChangeLayerRecursively(Transform p_trans, int p_layer)
@@ -297,7 +300,7 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
         bool jump = Input.GetKeyDown(KeyCode.Space);
         bool slide = Input.GetKey(KeyCode.C) || Input.GetKey(KeyCode.LeftControl);
         bool aim = Input.GetMouseButton(1); // && !weapon.isReloading; // my fix
-        bool jet = Input.GetKey(KeyCode.Space);
+        //bool jet = Input.GetKey(KeyCode.Space);
 
         //states 
         bool isGrounded = Physics.Raycast(groundDetector.position, Vector3.down, 0.1f, ground);
@@ -379,41 +382,41 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
         }
 
         //Jetting
-        if(jump && !isGrounded)
-        {
-            canJet = true;
-        }
+        //if(jump && !isGrounded)
+        //{
+        //    canJet = true;
+        //}
 
-        if (isGrounded)
-        {
-            canJet = false;
-        }
+        //if (isGrounded)
+        //{
+        //    canJet = false;
+        //}
 
-        if (canJet && jet && currentFuel > 0)
-        {
-            rig.AddForce(Vector3.up * jetForce * Time.fixedDeltaTime, ForceMode.Acceleration);
-            currentFuel = Mathf.Max(0, currentFuel - Time.fixedDeltaTime);
-        }
+        //if (canJet && jet && currentFuel > 0)
+        //{
+        //    rig.AddForce(Vector3.up * jetForce * Time.fixedDeltaTime, ForceMode.Acceleration);
+        //    currentFuel = Mathf.Max(0, currentFuel - Time.fixedDeltaTime);
+        //}
 
-        if (isGrounded)
-        {
-            if(currentRecovery  < jetWait){
-                currentRecovery = Mathf.Min(jetWait, currentRecovery + Time.fixedDeltaTime);
-            }
-            else
-            {
-                currentFuel = Mathf.Min(maxFuel, currentFuel + Time.fixedDeltaTime * jetRecovery);
-            }
-        }
+        //if (isGrounded)
+        //{
+        //    if(currentRecovery  < jetWait){
+        //        currentRecovery = Mathf.Min(jetWait, currentRecovery + Time.fixedDeltaTime);
+        //    }
+        //    else
+        //    {
+        //        currentFuel = Mathf.Min(maxFuel, currentFuel + Time.fixedDeltaTime * jetRecovery);
+        //    }
+        //}
 
-        ui_fuelbar.localScale = new Vector3(currentFuel / maxFuel, 1, 1);
+        //ui_fuelbar.localScale = new Vector3(currentFuel / maxFuel, 1, 1);
 
-        //Aiming
+        ////Aiming
         isAiming = weapon.Aim(isAiming);
 
         if (isAiming)
         {
-            weapon.Invoke("SniperScope",.2f);
+            weapon.Invoke("SniperScope", .2f);
         }
         else
         {
@@ -552,12 +555,6 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
         {
             ColorTeamIndicators(Color.blue);
         }
-    }
-
-    [PunRPC]
-    private void NoTeamIndicators()
-    {
-        foreach (Renderer renderer in teamIndicators) renderer.enabled = false;
     }
 
     [PunRPC]
