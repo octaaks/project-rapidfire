@@ -17,6 +17,7 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
     public float jetForce;
     public float jetWait;
     public float jetRecovery;
+    public bool canShoot;
     public Camera normalCam;
     public Camera weaponCam;
     public GameObject cameraParent;
@@ -31,7 +32,8 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
     public GameObject mesh;
     public GameObject deadFX;
 
-    public Transform weaponParent; 
+    public Transform weaponParent;
+    public Transform gunHolder;
 
     public Transform groundDetector;
     public LayerMask ground;
@@ -65,6 +67,7 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
     private TextMeshProUGUI ui_team;
 
     private Weapon weapon;
+    Quaternion gunHolderOrigin;
 
     private bool crouched;
     private bool sliding;
@@ -122,8 +125,12 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
 
         if (photonView.IsMine)
         {
+            //sprint gun holder
+            gunHolderOrigin = gunHolder.localRotation;
+
             ui_ammo = GameObject.Find("HUD/Ammo/Text (TMP)").GetComponent<TextMeshProUGUI>();
             ui_username = GameObject.Find("HUD/Username/Text (TMP)").GetComponent<TextMeshProUGUI>();
+            
             //ui_fuelbar = GameObject.Find("HUD/Fuel/Bar").transform;
             ui_healthbar = GameObject.Find("HUD/Health/HP").transform;
             ui_team = GameObject.Find("HUD/Team/Text (TMP)").GetComponent<TextMeshProUGUI>();
@@ -323,8 +330,29 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
             isAiming = false;
         }
 
-        //Movement
+        //sprint anim
+        Quaternion sprintHolder = weaponParent.transform.Find("WeaponHolderRun").transform.localRotation;
+        
+        if (isSprinting)
+        {
+            canShoot = false;
 
+            if (weapon.isReloading)
+            {
+                gunHolder.localRotation = Quaternion.Lerp(gunHolder.localRotation, gunHolderOrigin, Time.deltaTime * 17.5f);
+            }
+            else
+            {
+                gunHolder.localRotation = Quaternion.Lerp(gunHolder.localRotation, sprintHolder, Time.deltaTime * 10f);
+            }
+        }
+        else
+        {
+            gunHolder.localRotation = Quaternion.Lerp(gunHolder.localRotation, gunHolderOrigin, Time.deltaTime * 17.5f);
+            if(gunHolder.localRotation == gunHolderOrigin) canShoot = true;
+        }
+
+        //Movement
         Vector3 t_direction = Vector3.zero;
         float t_adjustedSpeed = speed;
 

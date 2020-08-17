@@ -11,6 +11,7 @@ public class Weapon : MonoBehaviourPunCallbacks
     [HideInInspector] public Gun currentGunData;
     public Transform weaponParent;
     public Transform gunPoint;
+    public Transform gunHolder;
     public GameObject gunCam;
     public GameObject mainCam;
     public GameObject camHolder;
@@ -35,7 +36,7 @@ public class Weapon : MonoBehaviourPunCallbacks
     private float currentCooldown;
     private float hitmarkerwait;
 
-    private bool isReloading; // my fix
+    public bool isReloading; // my fix
     private int currentIndex;
     private GameObject currentWeapon;
     private Color clearwhite = new Color(1, 1, 1, 0);
@@ -60,6 +61,7 @@ public class Weapon : MonoBehaviourPunCallbacks
         sniperScope.enabled = false;
 
         hitmarkerImage.color = clearwhite;
+
         Equip(0);
 
         if (photonView.IsMine)
@@ -111,10 +113,24 @@ public class Weapon : MonoBehaviourPunCallbacks
 
         if (photonView.IsMine && Input.GetKeyDown(KeyCode.Alpha2) && equippedWeapon != 2 && loadout.Count > 1)//my fix
         {
-            if(loadout[1] != null)
+            if (loadout[1] != null)
             {
                 photonView.RPC("Equip", RpcTarget.All, 1);
                 equippedWeapon = 2;
+            }
+        }
+
+        if (photonView.IsMine && Input.GetKeyDown(KeyCode.Q) && loadout.Count > 1)
+        {
+            if (equippedWeapon == 1)
+            {
+                photonView.RPC("Equip", RpcTarget.All, 1);
+                equippedWeapon = 2;
+            }
+            else
+            {
+                photonView.RPC("Equip", RpcTarget.All, 0);
+                equippedWeapon = 1;
             }
         }
 
@@ -122,10 +138,13 @@ public class Weapon : MonoBehaviourPunCallbacks
         {
             if (photonView.IsMine)
             {
+                //cant sprint while shoot
+                Player playerScript = GetComponent<Player>();
+                
                 //burst
-                if(loadout[currentIndex].burst != 1)
+                if (loadout[currentIndex].burst != 1)
                 {
-                    if (Input.GetMouseButtonDown(0) && currentCooldown <= 0 && !isReloading && delayAfterEquip < 0)
+                    if (Input.GetMouseButtonDown(0) && currentCooldown <= 0 && !isReloading && delayAfterEquip < 0 && playerScript.canShoot)
                     {
 
                         //checks if clip empty
@@ -142,14 +161,14 @@ public class Weapon : MonoBehaviourPunCallbacks
                             }
                             else
                             {
-                                StartCoroutine(Reload(loadout[currentIndex].reloadTime));
+                                photonView.RPC("ReloadRPC", RpcTarget.All);
                             }
                         }
                     }
                 }
                 else
                 {
-                    if (Input.GetMouseButton(0) && currentCooldown <= 0 && !isReloading && delayAfterEquip < 0)
+                    if (Input.GetMouseButton(0) && currentCooldown <= 0 && !isReloading && delayAfterEquip < 0 && playerScript.canShoot)
                     {
                         //checks if clip empty
                         if (loadout[currentIndex].FireBullet())
@@ -165,7 +184,7 @@ public class Weapon : MonoBehaviourPunCallbacks
                             }
                             else
                             {
-                                StartCoroutine(Reload(loadout[currentIndex].reloadTime));
+                                photonView.RPC("ReloadRPC", RpcTarget.All);
                             }
                         }
                     }
@@ -228,11 +247,56 @@ public class Weapon : MonoBehaviourPunCallbacks
 
     private void FixedUpdate()
     {
+        if (!photonView.IsMine) return;
         delayAfterEquip -= Time.deltaTime;
         
         if (spreadRate > 0.01f)
         {
             spreadRate -= Time.deltaTime * loadout[currentIndex].spreadCooldown;
+        }
+
+        //UI HUD Weapon Icon
+
+        GameObject primaryIconHolder = GameObject.Find("HUD/Weapon/Primary");
+        GameObject secondaryIconHolder = GameObject.Find("HUD/Weapon/Secondary");
+
+        if (loadout.Count >= 2)
+        {
+            primaryIconHolder.SetActive(true);
+            secondaryIconHolder.SetActive(true);
+        }
+        else
+        {
+            primaryIconHolder.SetActive(true);
+            secondaryIconHolder.SetActive(false);
+        }
+    }
+    
+    private void RefreshWeaponIcon(int index)
+    {
+        Transform primaryIconHolder = GameObject.Find("HUD/Weapon/Primary").transform;
+        Transform secondaryIconHolder = GameObject.Find("HUD/Weapon/Secondary").transform;
+
+        foreach (Transform icon in primaryIconHolder)
+        {
+            icon.gameObject.SetActive(false);
+        }
+
+        foreach (Transform icon in secondaryIconHolder)
+        {
+            icon.gameObject.SetActive(false);
+        }
+        
+        GameObject.Find("HUD/Weapon/Primary/" + loadout[index].name).SetActive(true);
+        if (loadout.Count >= 2)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                if (loadout[index].name != loadout[i].name)
+                {
+                    GameObject.Find("HUD/Weapon/Secondary/" + loadout[i].name).SetActive(true);
+                }
+            }
         }
     }
 
@@ -283,10 +347,12 @@ public class Weapon : MonoBehaviourPunCallbacks
     [PunRPC]
     void Equip(int p_ind)
     {
+        if (photonView.IsMine)
+        {
+            RefreshWeaponIcon(p_ind);
+        }
         spreadRate = 0;
-
         SniperScopeQuit();
-
         delayAfterEquip = 0.6f;
 
         if(currentWeapon != null)
@@ -301,7 +367,7 @@ public class Weapon : MonoBehaviourPunCallbacks
 
         currentIndex = p_ind;
 
-        GameObject t_newWeapon = Instantiate(loadout[p_ind].prefab, weaponParent.position, weaponParent.rotation, weaponParent) as GameObject;
+        GameObject t_newWeapon = Instantiate(loadout[p_ind].prefab, weaponParent.GetChild(0).position, weaponParent.GetChild(0).rotation, weaponParent.GetChild(0)) as GameObject;
         t_newWeapon.transform.localPosition = Vector3.zero;
         t_newWeapon.transform.localEulerAngles = Vector3.zero;
         t_newWeapon.GetComponent<Sway>().isMine = photonView.IsMine;
@@ -409,6 +475,7 @@ public class Weapon : MonoBehaviourPunCallbacks
     [PunRPC]
     void Shoot()
     {
+        
         //spread rate
         if (spreadRate <= 1)
         {
@@ -423,7 +490,7 @@ public class Weapon : MonoBehaviourPunCallbacks
         }
         else
         {
-            t_spawn = weaponParent.GetChild(0).transform.Find("Anchor/Muzzle");
+            t_spawn = gunHolder.GetChild(0).transform.Find("Anchor/Muzzle");
         }
         //cooldown
         currentCooldown = loadout[currentIndex].firerate;
@@ -493,7 +560,7 @@ public class Weapon : MonoBehaviourPunCallbacks
 
                 ////bullet trail FX
 
-                weaponObject = weaponParent.transform.GetChild(0);
+                weaponObject = gunHolder.transform.GetChild(0);
                 Transform t_muzzlePosition = weaponObject.transform.Find("Anchor/Muzzle").transform;
                 GameObject bulletTrailFX = Instantiate(bulletTrail.gameObject, t_muzzlePosition.position, Quaternion.identity);
 
@@ -527,7 +594,7 @@ public class Weapon : MonoBehaviourPunCallbacks
 
                 ////bullet trail FX
 
-                weaponObject = weaponParent.transform.GetChild(0);
+                weaponObject = gunHolder.transform.GetChild(0);
                 Transform t_muzzlePosition = weaponObject.transform.Find("Anchor/Muzzle").transform;
                 GameObject bulletTrailFX = Instantiate(bulletTrail.gameObject, t_muzzlePosition.position, Quaternion.identity);
 
@@ -548,7 +615,8 @@ public class Weapon : MonoBehaviourPunCallbacks
         sfx.PlayOneShot(sfx.clip);
                 
         //gun fx
-        weaponObject = weaponParent.transform.GetChild(0);
+        weaponObject = gunHolder.transform.GetChild(0);
+        weaponObject.transform.Find("Anchor/Muzzle").GetComponent<ParticleSystem>().Stop();
         weaponObject.transform.Find("Anchor/Muzzle").GetComponent<ParticleSystem>().Play();
 
         currentWeapon.transform.Rotate(-loadout[currentIndex].recoil, 0, 0);
