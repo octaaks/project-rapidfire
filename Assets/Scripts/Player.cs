@@ -38,6 +38,12 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
     public Transform groundDetector;
     public LayerMask ground;
 
+    public AudioClip footstepClip;
+    public AudioClip jumpClip;
+    public AudioClip landingClip;
+    public AudioSource source;
+    public bool walkSoundPlayed = false;
+
     [HideInInspector] public ProfileData playerProfile;
     [HideInInspector] public bool awayTeam;
     public TextMeshPro playerUsername;
@@ -125,6 +131,7 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
 
         if (photonView.IsMine)
         {
+
             //sprint gun holder
             gunHolderOrigin = gunHolder.localRotation;
 
@@ -204,6 +211,27 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
         bool isJumping = jump && isGrounded;
         bool isCrouching = crouch && !isSprinting && !isJumping && isGrounded;
 
+        //jump and landing sound
+        
+        bool airborne = false;
+        if (isJumping && !airborne)
+        {
+            source.clip = jumpClip;
+            source.pitch = 1 - 0.05f + Random.Range(-0.05f, 0.05f);
+            source.volume = 0.3f;
+            source.PlayOneShot(jumpClip);
+            airborne = true;
+        }
+
+        //if (isGrounded && airborne)
+        //{
+        //    source.clip = landingClip;
+        //    source.pitch = 1 - 0.05f + Random.Range(-0.05f, 0.05f);
+        //    source.volume = 0.3f;
+        //    source.PlayOneShot(landingClip);
+        //    airborne = false;
+        //}
+
         //Pause
         if (pause)
         {
@@ -250,18 +278,25 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
         //Headbob
         if (!isGrounded)
         {
+            StopCoroutine(Footsteps(0.25f));
+
             //airborne
             HeadBob(idleCounter, 0.01f, 0.01f);
             idleCounter += 0;
             weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 2f * .2f);
         }
         else if (sliding) {
+
+            StopCoroutine(Footsteps(0.25f));
+
             //sliding
             HeadBob(movementCounter, 0.15f, 0.075f);
             weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 10f * .2f);
         }
         else if(t_hmove == 0 && t_vmove == 0)
         {
+            StopCoroutine(Footsteps(0.25f));
+
             //idling
             HeadBob(idleCounter, 0.008f, 0.008f);
             idleCounter += Time.deltaTime;
@@ -269,6 +304,12 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
         }
         else if(!isSprinting && !crouched)
         {
+            //walking sound footstep
+            if (!walkSoundPlayed)
+            {
+                StartCoroutine(Footsteps(0.35f));
+            }
+
             //walking
             HeadBob(movementCounter, 0.035f, 0.035f);
             movementCounter += Time.deltaTime * 6f;
@@ -283,6 +324,12 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
         }
         else
         {
+            //run sound footstep
+            if (!walkSoundPlayed)
+            {
+                StartCoroutine(Footsteps(0.2f));
+            }
+
             //sprinting
             HeadBob(movementCounter, 0.15f, 0.055f);
             movementCounter += Time.deltaTime * 9f;
@@ -297,6 +344,7 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
     void FixedUpdate()
     {
         if (!photonView.IsMine) return;
+
 
         //Axes
         float t_hmove = Input.GetAxisRaw("Horizontal");
@@ -438,18 +486,29 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
         //}
 
         //ui_fuelbar.localScale = new Vector3(currentFuel / maxFuel, 1, 1);
-
-        ////Aiming
-        isAiming = weapon.Aim(isAiming);
-
-        if (isAiming)
+        
+        //Aiming
+        if (weapon.currentGunData != null)
         {
-            weapon.Invoke("SniperScope", .2f);
+            if (weapon.currentGunData.isSniper)
+            {
+                isAiming = weapon.Aim(isAiming) && weapon.currentCooldown <= 0;
+            }
+            else
+            {
+                isAiming = weapon.Aim(isAiming);
+            }
         }
-        else
-        {
-            weapon.SniperScopeQuit();
-        }
+
+        //if (isAiming && weapon.currentCooldown <= 0)
+        //{
+        //    weapon.Invoke("SniperScope", .2f);
+        //}
+        //else
+        //{
+        //    isAiming = false;
+        //    weapon.SniperScopeQuit();
+        //}
 
         //FOV
         if (sliding)
@@ -534,7 +593,7 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
         float t_aim_adjust = 1f;
         if (isAiming)
         {
-            t_aim_adjust = 0.1f;
+            t_aim_adjust = 0.05f;
         }
         targetWeaponBobPosition = weaponParentCurrentPos + new Vector3(Mathf.Cos(p_z) * p_y_intensity*t_aim_adjust, Mathf.Sin(p_z*2)*p_y_intensity * t_aim_adjust, 0);
     }
@@ -637,5 +696,18 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
         {
             TakeDamage(101, -1);
         }
+    }
+    
+    IEnumerator Footsteps(float delay)
+    {
+        walkSoundPlayed = true;
+        source.clip = footstepClip;
+        source.pitch = 1 - 0.05f + Random.Range(-0.05f, 0.05f);
+        source.volume = 0.3f;
+        source.PlayOneShot(footstepClip);
+        yield return new WaitForSeconds(delay);
+
+        walkSoundPlayed = false;
+        StopCoroutine(Footsteps(delay));
     }
 }

@@ -33,7 +33,7 @@ public class Weapon : MonoBehaviourPunCallbacks
     private Image hitmarkerImage;
     private Image crosshairSpread;
     private Image sniperScope;
-    private float currentCooldown;
+    public float currentCooldown;
     private float hitmarkerwait;
 
     public bool isReloading; // my fix
@@ -44,6 +44,7 @@ public class Weapon : MonoBehaviourPunCallbacks
 
     private bool canGrab = false;
     private Quaternion camHolderOriginRotation;
+    
 
     int equippedWeapon = 1;
     float delayAfterEquip = 0.6f;
@@ -311,6 +312,7 @@ public class Weapon : MonoBehaviourPunCallbacks
     {
         if (!loadout[currentIndex].isSniper) return;
         if (delayAfterEquip > 0) return;
+        if (currentCooldown > 0) return;
 
         sniperScope.enabled = true;
         gunCam.SetActive(false);
@@ -319,6 +321,9 @@ public class Weapon : MonoBehaviourPunCallbacks
     public void SniperScopeQuit()
     {
         if (!loadout[currentIndex].isSniper) return;
+        
+        Player playerScript = GetComponent<Player>();
+        playerScript.isAiming = false;
         sniperScope.enabled = false;
         gunCam.SetActive(true);
     }
@@ -445,6 +450,7 @@ public class Weapon : MonoBehaviourPunCallbacks
         if (!loadout[currentIndex].aimable) return false;
         if (isReloading) p_isAiming = false;
         if (delayAfterEquip > 0) return false;
+        if (loadout[currentIndex].isSniper && currentCooldown > 0) p_isAiming = false;
 
         isAiming = p_isAiming;
         Transform t_anchor = currentWeapon.transform.Find("Anchor");
@@ -456,6 +462,13 @@ public class Weapon : MonoBehaviourPunCallbacks
             if (!loadout[currentIndex].isSniper)
             {
                 SniperScopeQuit();
+            }
+            else
+            {
+                if (currentCooldown <= 0)
+                {
+                    Invoke("SniperScope", .2f);
+                }
             }
 
             //aim ADS
@@ -475,7 +488,7 @@ public class Weapon : MonoBehaviourPunCallbacks
     [PunRPC]
     void Shoot()
     {
-        
+
         //spread rate
         if (spreadRate <= 1)
         {
@@ -623,11 +636,13 @@ public class Weapon : MonoBehaviourPunCallbacks
         camHolder.transform.Rotate(-loadout[currentIndex].camRecoil, 0, 0);
 
         currentWeapon.transform.position -= currentWeapon.transform.forward*loadout[currentIndex].kickback;
-
-        //if (loadout[currentIndex].isSniper)
-        //{
-        //    GetComponent<Animator>().Play("sniper_shot");
-        //}
+        
+        //sniper scope out
+        if (loadout[currentIndex].isSniper)
+        {
+            SniperScopeQuit();
+            isAiming = false;
+        }
 
         if (currentGunData.recovery)
         {

@@ -17,7 +17,7 @@ MonoBehaviour:
   display: {fileID: 2934486304957575732, guid: 63caa1b12648f73459c5832f9bd6f2b6, type: 3}
   damage: 9
   pellets: 1
-  firerate: 0.07
+  firerate: 0.075
   aimSpeed: 25
   ammo: 150
   clipsize: 50
@@ -28,14 +28,14 @@ MonoBehaviour:
   isSniper: 0
   bloom: 20
   bloomWhenAim: 8
-  kickback: 0.03
+  kickback: 0.01
   recoil: 0.025
   camRecoil: 0.45
   spreadCooldown: 0.75
   spreadRatePerShot: 0.13
   fixedRecoil: 0
   mainFOV: 0.6
-  weaponFOV: 0.2
+  weaponFOV: 0.25
   gunShotSound: {fileID: 8300000, guid: 9c2752457084be541939e2abf0b62f50, type: 3}
   recoverySound: {fileID: 0}
   recoveryDelayTime: 0.2

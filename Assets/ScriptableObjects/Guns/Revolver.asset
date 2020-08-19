@@ -29,7 +29,7 @@ MonoBehaviour:
   bloom: 10
   bloomWhenAim: 3
   kickback: 0.1
-  recoil: 10
+  recoil: 1
   camRecoil: 0.8
   spreadCooldown: 0.8
   spreadRatePerShot: 0.4

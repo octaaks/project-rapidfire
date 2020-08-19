@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   intensity: -1.5
-  smooth: 999
+  smooth: 3
   isMine: 0
 --- !u!95 &8925866042778298437
 Animator:

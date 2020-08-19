@@ -28,11 +28,12 @@ MonoBehaviour:
   isSniper: 1
   bloom: 30
   bloomWhenAim: 1
-  kickback: 0.2
-  recoil: 15
+  kickback: 0.15
+  recoil: 5
   camRecoil: 10
   spreadCooldown: 1
   spreadRatePerShot: 1
+  fixedRecoil: 0
   mainFOV: 0.3
   weaponFOV: 0.1
   gunShotSound: {fileID: 8300000, guid: 675b3fb20faaeec4aa854f13696fa309, type: 3}
