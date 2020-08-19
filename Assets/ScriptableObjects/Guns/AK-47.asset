@@ -29,13 +29,13 @@ MonoBehaviour:
   bloom: 25
   bloomWhenAim: 9
   kickback: 0.03
-  recoil: 0.1
+  recoil: 0.03
   camRecoil: 0.6
   spreadCooldown: 0.3
   spreadRatePerShot: 0.15
   fixedRecoil: 0
   mainFOV: 0.6
-  weaponFOV: 0.2
+  weaponFOV: 0.25
   gunShotSound: {fileID: 8300000, guid: c335dbf041877434d82905faa097535b, type: 3}
   recoverySound: {fileID: 0}
   recoveryDelayTime: 0.2

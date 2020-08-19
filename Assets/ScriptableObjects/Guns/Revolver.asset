@@ -27,7 +27,7 @@ MonoBehaviour:
   recovery: 0
   isSniper: 0
   bloom: 10
-  bloomWhenAim: 3
+  bloomWhenAim: 1
   kickback: 0.1
   recoil: 1
   camRecoil: 0.8

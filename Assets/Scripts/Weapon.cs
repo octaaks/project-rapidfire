@@ -355,9 +355,17 @@ public class Weapon : MonoBehaviourPunCallbacks
         if (photonView.IsMine)
         {
             RefreshWeaponIcon(p_ind);
+
+            if (!loadout[currentIndex].isSniper)
+            {
+                GameObject.Find("HUD/Crosshair/Image").GetComponent<Image>().enabled = true;
+            }
+
+            Aim(false);
+            SniperScopeQuit();
         }
+
         spreadRate = 0;
-        SniperScopeQuit();
         delayAfterEquip = 0.6f;
 
         if(currentWeapon != null)
