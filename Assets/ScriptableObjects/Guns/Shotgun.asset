@@ -19,8 +19,8 @@ MonoBehaviour:
   pellets: 15
   firerate: 0.6
   aimSpeed: 15
-  ammo: 40
-  clipsize: 10
+  ammo: 32
+  clipsize: 8
   reloadTime: 2
   burst: 0
   aimable: 0

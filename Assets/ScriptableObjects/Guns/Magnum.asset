@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63fff0bda7f0d9740a2c41893293e307, type: 3}
+  m_Name: Magnum
+  m_EditorClassIdentifier: 
+  name: Magnum
+  prefab: {fileID: 2934486304957575732, guid: 367cb4acf846ad24ca165b492220d584, type: 3}
+  display: {fileID: 2934486304957575732, guid: e21eebf93a93f5244944675dfb94dae8, type: 3}
+  damage: 40
+  pellets: 1
+  firerate: 0.01
+  aimSpeed: 15
+  ammo: 60
+  clipsize: 6
+  reloadTime: 1.5
+  burst: 0
+  aimable: 1
+  recovery: 0
+  isSniper: 0
+  bloom: 10
+  bloomWhenAim: 1
+  kickback: 0.1
+  recoil: 2
+  camRecoil: 0.8
+  spreadCooldown: 0.8
+  spreadRatePerShot: 0.4
+  fixedRecoil: 0
+  mainFOV: 0.7
+  weaponFOV: 0.45
+  gunShotSound: {fileID: 8300000, guid: f09a29e7a2d45dc4f83252ab72d8adf0, type: 3}
+  shotVolume: 1
+  pitchRandomization: 0.03

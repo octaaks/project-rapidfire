@@ -17,6 +17,9 @@ TextureImporter:
   - first:
       213: -2772874111074489442
     second: icon-sniper
+  - first:
+      213: 3831709172651705816
+    second: icon-magnum
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -202,6 +205,27 @@ TextureImporter:
       bones: []
       spriteID: e9b2782ffa5c489d0800000000000000
       internalID: -2772874111074489442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icon-magnum
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 871
+        width: 321
+        height: 174
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d5c286f037fc2530800000000000000
+      internalID: 3831709172651705816
       vertices: []
       indices: 
       edges: []

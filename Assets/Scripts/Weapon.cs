@@ -655,16 +655,7 @@ public class Weapon : MonoBehaviourPunCallbacks
         if (currentGunData.recovery)
         {
             currentWeapon.GetComponent<Animator>().Play("recovery", 0, 0);
-            Invoke("PlayRecoverySound", currentGunData.recoveryDelayTime);
         }
-    }
-
-    void PlayRecoverySound()
-    {
-        sfx.clip = currentGunData.recoverySound;
-        sfx.pitch = 1 - currentGunData.pitchRandomization + Random.Range(-currentGunData.pitchRandomization, currentGunData.pitchRandomization);
-        sfx.volume = currentGunData.shotVolume;
-        sfx.PlayOneShot(sfx.clip);
     }
     
     [PunRPC]

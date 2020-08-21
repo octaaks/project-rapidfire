@@ -59,7 +59,7 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
     private float idleCounter;
 
     private float baseFOV;
-    private float sprintFOVModifier = 1.2f;
+    private float sprintFOVModifier = 1.15f;
     private Vector3 origin;
 
     private int currentHealth;
@@ -202,7 +202,7 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
         //Controls
         bool sprint = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         bool jump = Input.GetKeyDown(KeyCode.Space);
-        bool crouch = Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.LeftControl);
+        bool crouch = false; //Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.LeftControl);
         bool pause = Input.GetKeyDown(KeyCode.Escape);
 
         //states 
@@ -278,49 +278,49 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
         //Headbob
         if (!isGrounded)
         {
-            StopCoroutine(Footsteps(0.25f));
-
             //airborne
             HeadBob(idleCounter, 0.01f, 0.01f);
             idleCounter += 0;
-            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 2f * .2f);
-        }
-        else if (sliding) {
+            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 2f);
 
             StopCoroutine(Footsteps(0.25f));
-
+        }
+        else if (sliding)
+        {
             //sliding
             HeadBob(movementCounter, 0.15f, 0.075f);
-            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 10f * .2f);
+            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 2f);
+
+            StopCoroutine(Footsteps(0.25f));
         }
         else if(t_hmove == 0 && t_vmove == 0)
         {
-            StopCoroutine(Footsteps(0.25f));
-
             //idling
             HeadBob(idleCounter, 0.008f, 0.008f);
             idleCounter += Time.deltaTime;
-            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 1.5f * .2f);
+            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 2f);
+
+            StopCoroutine(Footsteps(0.25f));
         }
         else if(!isSprinting && !crouched)
         {
+            //walking
+            HeadBob(movementCounter, 0.035f, 0.035f);
+            movementCounter += Time.deltaTime * 6f;
+            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 2f);
+
             //walking sound footstep
             if (!walkSoundPlayed)
             {
                 StartCoroutine(Footsteps(0.35f));
             }
-
-            //walking
-            HeadBob(movementCounter, 0.035f, 0.035f);
-            movementCounter += Time.deltaTime * 6f;
-            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 6f * .2f);
         }
         else if(crouched)
         {
             //crouching
             HeadBob(movementCounter, 0.02f, 0.02f);
             movementCounter += Time.deltaTime * 3f;
-            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 6f * .2f);
+            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 2f);
         }
         else
         {
@@ -333,7 +333,7 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
             //sprinting
             HeadBob(movementCounter, 0.15f, 0.055f);
             movementCounter += Time.deltaTime * 9f;
-            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 10f * .2f);
+            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 2f);
         }
 
         //UI
@@ -353,7 +353,7 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
         //Controls
         bool sprint = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         bool jump = Input.GetKeyDown(KeyCode.Space);
-        bool slide = Input.GetKey(KeyCode.C) || Input.GetKey(KeyCode.LeftControl);
+        bool slide = false; //Input.GetKey(KeyCode.C) || Input.GetKey(KeyCode.LeftControl);
         bool aim = Input.GetMouseButton(1); // && !weapon.isReloading; // my fix
         //bool jet = Input.GetKey(KeyCode.Space);
 
@@ -383,6 +383,8 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
         
         if (isSprinting)
         {
+            anim.speed = sprintModifier;
+
             canShoot = false;
 
             if (weapon.isReloading)
@@ -396,6 +398,7 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
         }
         else
         {
+            anim.speed = 1;
             gunHolder.localRotation = Quaternion.Lerp(gunHolder.localRotation, gunHolderOrigin, Time.deltaTime * 17.5f);
             if(gunHolder.localRotation == gunHolderOrigin) canShoot = true;
         }
@@ -542,13 +545,13 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
 
             if (crouched)
             {
-                normalCamTarget = Vector3.MoveTowards(normalCam.transform.localPosition, origin + Vector3.down * crouchAmount, Time.deltaTime * 2f);
-                weaponCamTarget = Vector3.MoveTowards(weaponCam.transform.localPosition, origin + Vector3.down * crouchAmount, Time.deltaTime * 2f);
+                normalCamTarget = Vector3.MoveTowards(normalCam.transform.localPosition, origin + Vector3.down * crouchAmount, Time.deltaTime * 6f);
+                weaponCamTarget = Vector3.MoveTowards(weaponCam.transform.localPosition, origin + Vector3.down * crouchAmount, Time.deltaTime * 6f);
             }
             else
             {
-                normalCamTarget = Vector3.MoveTowards(normalCam.transform.localPosition, origin, Time.deltaTime * 2f);
-                weaponCamTarget = Vector3.MoveTowards(weaponCam.transform.localPosition, origin, Time.deltaTime * 2f);
+                normalCamTarget = Vector3.MoveTowards(normalCam.transform.localPosition, origin, Time.deltaTime * 6f);
+                weaponCamTarget = Vector3.MoveTowards(weaponCam.transform.localPosition, origin, Time.deltaTime * 6f);
             }
         }
 
@@ -564,7 +567,7 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
 
         anim.SetFloat("horizontal", t_anim_horizontal);
         anim.SetFloat("vertical", t_anim_vertical);
-
+        anim.SetBool("crouching", crouched);
     }
 
     private void LateUpdate()

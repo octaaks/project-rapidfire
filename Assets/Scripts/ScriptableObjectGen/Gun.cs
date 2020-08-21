@@ -35,8 +35,6 @@ public class Gun : ScriptableObject
     [Range(0, 1)] public float weaponFOV;
 
     public AudioClip gunShotSound;
-    public AudioClip recoverySound;
-    public float recoveryDelayTime = 0.2f;
 
     [Range(0, 1)] public float shotVolume = 1;
     public float pitchRandomization;

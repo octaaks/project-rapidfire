@@ -1079,7 +1079,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6741137458698550792}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.01, y: 1.05, z: -5.25}
+  m_LocalPosition: {x: 0.01, y: 1.05, z: -5.243}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6741137457157943168}
@@ -1193,7 +1193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadout:
-  - {fileID: 11400000, guid: 1c45f451161f67249a13b0b48990efb2, type: 2}
+  - {fileID: 11400000, guid: 4df81a688b8cec04093e8c97553a1e11, type: 2}
   currentGunData: {fileID: 0}
   weaponParent: {fileID: 6741137457949533439}
   gunPoint: {fileID: 865739879025764574}
@@ -1283,9 +1283,14 @@ MonoBehaviour:
   - Type: 1
     SynchronizeType: 2
     Name: vertical
+  - Type: 4
+    SynchronizeType: 0
+    Name: crouching
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
+  - SynchronizeType: 0
+    LayerIndex: 1
 --- !u!95 &6330120016367018309
 Animator:
   serializedVersion: 3

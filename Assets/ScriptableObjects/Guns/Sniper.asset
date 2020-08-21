@@ -37,7 +37,7 @@ MonoBehaviour:
   mainFOV: 0.3
   weaponFOV: 0.1
   gunShotSound: {fileID: 8300000, guid: 675b3fb20faaeec4aa854f13696fa309, type: 3}
-  recoverySound: {fileID: 8300000, guid: 0baaba924ca82554ea3cfe1af9f270ce, type: 3}
+  recoverySound: {fileID: 8300000, guid: fc1e0f06191cf7b41b1825ad91552715, type: 3}
   recoveryDelayTime: 0.8
   shotVolume: 1
   pitchRandomization: 0.05
